@@ -22,12 +22,15 @@ import java.util.concurrent.TimeUnit;
      double frontRightPower;
      double backRightPower;
 
+     double power;
+
 
      int armStart;
      int armTarget;
      int armTop;
      int claw_count;
      int door_count;
+
 
      int acount;
      boolean aPressed;
@@ -39,7 +42,6 @@ import java.util.concurrent.TimeUnit;
      boolean squarePressed;
      int squareCount;
      int arm;
-     int elbow;
      double pmodify = .25;
 
      @Override
@@ -94,6 +96,7 @@ import java.util.concurrent.TimeUnit;
          } else {
              robot.arm.setPower(0);
          }
+
          ///////////////////////doors//////////////////////////////
          if (gamepad1.triangle) {
              if (!buttonPressed) {
@@ -137,12 +140,21 @@ import java.util.concurrent.TimeUnit;
                          // robot.topIntake.setPower(1);
                          //robot.windmill.setPower(1);
 
-                     } else {
-                         robot.intakeLeft.setPower(0);
-                         robot.intakeRight.setPower(0);
+         if (gamepad1.dpad_down && System.currentTimeMillis() - lastPressed > 500) {
+             lastPressed = System.currentTimeMillis();
+             motorOn = !motorOn;
+             if (robot.intakeLeft.getPower() == 0 && robot.intakeRight.getPower() == 0) {
+                 robot.intakeLeft.setPower(1);
+                 robot.intakeRight.setPower(1);
+                 // robot.topIntake.setPower(1);
+                 //robot.windmill.setPower(1);
 
-                         //robot.topIntake.setPower(0);
-                         //  robot.windmill.setPower(0);
+             } else {
+                 robot.intakeRight.setPower(0);
+                 robot.intakeLeft.setPower(0);
+                 //robot.topIntake.setPower(0);
+                 //  robot.windmill.setPower(0);
+
 
                      }
                  }
@@ -158,32 +170,44 @@ import java.util.concurrent.TimeUnit;
                          robot.turntable.setPower(0);
 
 
-                     }
-                 }
-/////////////////////////////
+             }}
 
 
-/////////////////Controlled Arm and Elbow////////////
-/*
-                 if (gamepad1.dpad_left) {
-                     armTarget = armTop;
-                 }
+/////////////////////////////doors/////////////////////////
+        if(gamepad1.right_bumper) {
+            robot.frontDoor.setPosition(0.5);
+        }
+        else{
+            robot.frontDoor.setPosition(0);
+         }
 
- */
+         if(gamepad1.right_trigger > 0.5) {
+             robot.backDoor.setPosition(0.5);
+         }
+         else{
+             robot.backDoor.setPosition(0);
+         }
 
 
-         //if (gamepad1.circle) {
-         //    robot.arm.setTargetPosition(armTarget);
+/////////////////Controlled Arm////////////
 
-         //    robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         if (gamepad1.dpad_left) {
+             armTarget = armTop;
+         }
 
-             /*while (robot.arm.isBusy() && robot.elbow.isBusy()) {
+         if (gamepad1.dpad_right){
+             armTarget= armIntake;
+         }
+         if (gamepad1.circle) {
+             robot.arm.setTargetPosition(armTarget);
+
+             robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+             while (robot.arm.isBusy()) {
+
                  telemetry.addData("ARM", "Running to %7d : %7d",
                          armTarget,
                          robot.arm.getCurrentPosition());
-                 telemetry.addData("ELBOW", "Running to %7d : %7d",
-                         elbowTarget,
-                         robot.elbow.getCurrentPosition());
                  telemetry.update();
 
 
@@ -199,7 +223,7 @@ import java.util.concurrent.TimeUnit;
             }
 
 
-         }*/
+         }
 
 /////////////////// DriverControl Functions/////////////////////
 

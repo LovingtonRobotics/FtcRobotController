@@ -29,10 +29,8 @@ public class HardwarePushbot {
 
 
     public static DcMotor arm = null;
-
-    public static DcMotor intakeLeft = null;
     public static DcMotor intakeRight = null;
-
+    public static DcMotor intakeLeft = null;
 
 
 
@@ -46,8 +44,9 @@ public class HardwarePushbot {
     //public static DigitalChannel CascadeTouch = null;  // Hardware Device Object
     public static TouchSensor armstop = null;
     public static CRServo turntable = null;
-    public static Servo frontdoor = null;
-    public static Servo backdoor = null;
+    public static Servo frontDoor = null;
+    public static Servo backDoor = null;
+
 
 
 
@@ -89,8 +88,8 @@ public class HardwarePushbot {
 
         // Define and initialize Servos
         turntable =  hwMap.get(CRServo.class, "turntable");
-        frontdoor =  hwMap.get(Servo.class, "frontdoor");
-        backdoor =  hwMap.get(Servo.class, "backdoor");
+        backDoor = hwMap.get(Servo.class, "backDoor");
+        frontDoor = hwMap.get(Servo.class, "frontDoor");
 
 
 
@@ -112,23 +111,15 @@ public class HardwarePushbot {
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         intakeRight.setDirection(DcMotor.Direction.FORWARD);
 
-
-
-
-
-
-
         // Set all motors to zero power
         frontLeft.setPower(0);
         backLeft.setPower(0);
         frontRight.setPower(0);
         backRight.setPower(0);
         arm.setPower(0);
+
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
-
-
-
 
 
         // rollers.setPower(0);
@@ -140,11 +131,9 @@ public class HardwarePushbot {
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
 
 
         //rollers.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -156,10 +145,9 @@ public class HardwarePushbot {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         intakeLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intakeRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-
 
 
 

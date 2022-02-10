@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class automethods extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
+
     ElapsedTime timer = new ElapsedTime();
 
 
@@ -34,7 +35,8 @@ public class automethods extends LinearOpMode {
 
 
     static final double COUNTS_PER_MOTOR_REV = 537.7;    //need to adjust for big wheels
-    static final double WHEEL_DIAMETER_INCHES = 3.77953;     // For figuring circ0umference
+    static final double WHEEL_DIAMETER_INCHES = 3.77953;     // For figuring circumference
+
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
@@ -174,7 +176,7 @@ public class automethods extends LinearOpMode {
     //////////////////////////turning////////////////////
     public void imuTurn(double speed, double angle) {
 
-        // keep looping while we are still active, and not on heading.
+        // keep looping while we are still actifve, and not on heading.
         while (opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF)) {
             // Update telemetry & Allow time for other processes to run.
             telemetry.update();
@@ -215,6 +217,7 @@ public class automethods extends LinearOpMode {
 
         return onTarget;
     }
+    //////////////////////////////////////Barcode////////////////
 
     public double getError(double targetAngle) {
 
@@ -324,6 +327,7 @@ public class automethods extends LinearOpMode {
         robot.backLeft.setPower(0);
         robot.backRight.setPower(0);
         // robot.wobble.setPower(0);
+
         robot.intakeLeft.setPower(0);
         robot.intakeRight.setPower(0);
 
