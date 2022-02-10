@@ -34,7 +34,7 @@ public class automethods extends LinearOpMode {
 
 
     static final double COUNTS_PER_MOTOR_REV = 537.7;    //need to adjust for big wheels
-    static final double WHEEL_DIAMETER_INCHES = 5.98425;     // For figuring circ0umference
+    static final double WHEEL_DIAMETER_INCHES = 3.77953;     // For figuring circ0umference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
@@ -324,7 +324,9 @@ public class automethods extends LinearOpMode {
         robot.backLeft.setPower(0);
         robot.backRight.setPower(0);
         // robot.wobble.setPower(0);
-        robot.intake.setPower(0);
+        robot.intakeLeft.setPower(0);
+        robot.intakeRight.setPower(0);
+
     }
 
 
