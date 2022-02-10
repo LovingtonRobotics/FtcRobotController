@@ -42,7 +42,11 @@ public class autonomous extends automethods {
         waitForStart();
 
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
-    encoderDrive(0.7,60, 5);
+
+
+    encoderDrive(.5, 80, 6);
+        strafeRight(.5,-90,6);
+
         //  rpos = returnRingPosition(3);
 
 
