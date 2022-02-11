@@ -171,7 +171,28 @@ public class automethods extends LinearOpMode {
             }
     }
 */
+public void startturn(double speed, double timeoutS)
+{
+    if (opModeIsActive()) {
+        // reset the timeout time and start motion.
+        runtime.reset();
+        robot.turntable.setPower(speed);
+        // keep looping while we are still active, and there is time left, and both motors are running.
+        // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+        // its target position, the motion will stop.  This is "safer" in the event that the robot will
+        // always end the motion as soon as possible.
+        // However, if you require that BOTH motors have finished their moves before the robot continues
+        // onto the next step, use (isBusy() || isBusy()) in the loop test.
+        while (opModeIsActive() &&
+                (runtime.seconds() < timeoutS)) {
+            // Display it for the driver.
+            telemetry.addData("Running", "True");
+            telemetry.update();
+        }
+        // Stop all motion;
+        robot.turntable.setPower(0);
 
+    }}
 
     //////////////////////////turning////////////////////
     public void imuTurn(double speed, double angle) {
