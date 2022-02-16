@@ -71,7 +71,9 @@ public class BarcodePositionDetector extends LinearOpMode
         {
             @Override
             public void onOpened()
+
             {
+
                 webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
 

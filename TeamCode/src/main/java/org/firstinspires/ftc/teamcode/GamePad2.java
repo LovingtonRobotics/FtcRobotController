@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
      int armStart;
      int armTarget;
+     int armIntake;
      int armTop;
      int claw_count;
      int door_count;
@@ -196,6 +197,11 @@ import java.util.concurrent.TimeUnit;
                      armTarget = armTop;
                  }
 
+                 if (gamepad1.dpad_left) {
+                     armTarget = armTop;
+                 }
+
+
                  if (gamepad1.dpad_right) {
                      armTarget = armIntake;
                  }
@@ -212,6 +218,11 @@ import java.util.concurrent.TimeUnit;
                          telemetry.update();
 
 
+                         telemetry.addData("ARM", "Running to %7d : %7d",
+                                 armTarget,
+                                 robot.arm.getCurrentPosition());
+                         telemetry.update();
+
                          // Stop all motion;
                          robot.backLeft.setPower(0);
                          robot.backRight.setPower(0);
@@ -222,6 +233,20 @@ import java.util.concurrent.TimeUnit;
                          robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                          robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                      }
+
+
+                         // Stop all motion;
+                         robot.backLeft.setPower(0);
+                         robot.backRight.setPower(0);
+
+                         // Turn off RUN_TO_POSITION
+                         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                     }
+
+                 }
 
 
                  }
