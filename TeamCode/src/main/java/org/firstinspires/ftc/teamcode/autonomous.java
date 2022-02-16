@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.BarcodePositionDetector;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 @Autonomous(name="autonomous", group="Test")
@@ -12,7 +14,7 @@ public class autonomous extends automethods {
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
-        //robot.autoinit(hardwareMap);
+     //   robot.autoinit(hardwareMap);
 
 
 
@@ -40,10 +42,11 @@ public class autonomous extends automethods {
         waitForStart();
 
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
-    encoderDrive(.5, 12, 3);
-    imuTurn(.3, 90);
-    imuHold(1);
-    strafeRight(0.5, 12, 3);
+
+
+    encoderDrive(.5, 80, 6);
+        strafeRight(.5,-90,6);
+
         //  rpos = returnRingPosition(3);
 
 

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.concurrent.TimeUnit;
 
 
- @TeleOp(name="Gamepad27", group="Linear Opmode")
+ @TeleOp(name="Gamepad254", group="Linear Opmode")
  public class GamePad2 extends OpMode {
      HardwarePushbot robot = new HardwarePushbot();
 
@@ -22,30 +22,34 @@ import java.util.concurrent.TimeUnit;
      double frontRightPower;
      double backRightPower;
 
+     double power;
+
 
      int armStart;
      int armTarget;
+     int armIntake;
      int armTop;
+     int claw_count;
+     int door_count;
      int armIntake;
 
-     int elbowStart;
-     int elbowTarget;
-     int elbowTop;
-     int elbowIntake;
+
+     int acount;
+     boolean aPressed;
+
+     boolean buttonPressed;
 
      long lastPressed = 0;
      boolean motorOn = false;
      boolean squarePressed;
      int squareCount;
      int arm;
-     int elbow;
      double pmodify = .25;
 
      @Override
      public void init() {
          robot.init(hardwareMap);
          armStart = robot.arm.getCurrentPosition();
-         elbowStart = robot.elbow.getCurrentPosition();
 
      }
 
@@ -53,7 +57,6 @@ import java.util.concurrent.TimeUnit;
      @Override
      public void loop() {
          telemetry.addData("Arm", "Current Position : %7d", robot.arm.getCurrentPosition());
-         telemetry.addData("Elbow", "Current Position : %7d", robot.elbow.getCurrentPosition());
          telemetry.update();
 
          /////Drive System//////
@@ -67,14 +70,13 @@ import java.util.concurrent.TimeUnit;
          backRightPower = h * Math.sin(robotAngle) + rightX;
 
 
-         if (gamepad1.triangle) {
+         if (gamepad1.right_trigger > .5) {
              robot.frontRight.setPower(frontRightPower * pmodify);
              robot.frontLeft.setPower(frontLeftPower * pmodify);
              robot.backRight.setPower(backRightPower * pmodify);
              robot.backLeft.setPower(backLeftPower * pmodify);
 
-         } else
-             {
+         } else {
              robot.frontRight.setPower(frontRightPower);
              robot.frontLeft.setPower(frontLeftPower);
              robot.backRight.setPower(backRightPower);
@@ -83,133 +85,176 @@ import java.util.concurrent.TimeUnit;
          }
 
 
-
-
 //////////////////////////////////arm//////////////////////////////
 
-         if (gamepad1.left_bumper && !robot.armstop.isPressed()) {//goes
+         if (gamepad1.left_bumper) {//goes
              robot.arm.setPower(0.5);
 
 
-         } else if (gamepad1.left_trigger > .5  ) {// goes down
+         } else if (gamepad1.left_trigger > .5) {// goes down
              robot.arm.setPower(-0.5);
 
 
          } else {
              robot.arm.setPower(0);
          }
- ///////////////////////elbow//////////////////////////////
-         if (gamepad1.right_bumper ) {// goes up
-             robot.elbow.setPower(0.5);
 
+         ///////////////////////doors//////////////////////////////
+         if (gamepad1.triangle) {
+             if (!buttonPressed) {
+                 claw_count += 1;
+                 buttonPressed = true;
+             } else {
+                 buttonPressed = false;
+             }
 
-         } else if (gamepad1.right_trigger > .5 && !robot.elbowstop.isPressed()) {// goes down
-             robot.elbow.setPower(-0.5);
+             if (claw_count % 2 == 0) {
+                 robot.frontDoor.setPosition(86);
+             } else {
+                 robot.frontDoor.setPosition(0);
+             }
+         }
 
+         if (gamepad1.square) {
+             if (!buttonPressed) {
+                 door_count += 1;
+                 buttonPressed = true;
+             } else {
+                 buttonPressed = false;
+             }
 
-
-         } else {
-             robot.elbow.setPower(0);
+             if (door_count % 2 == 0) {
+                 robot.backDoor.setPosition(86);
+             } else {
+                 robot.backDoor.setPosition(0);
+             }
          }
 
 
- ///////////////////////////intake//////////////////
+         ///////////////////////////intake//////////////////
 
          if (gamepad1.dpad_down && System.currentTimeMillis() - lastPressed > 500) {
              lastPressed = System.currentTimeMillis();
              motorOn = !motorOn;
-             if (robot.intake.getPower() == 0) {
-                 robot.intake.setPower(1);
+             if (robot.intakeLeft.getPower() == 0) {
+                 robot.intakeLeft.setPower(0.65);
+                 robot.intakeRight.setPower(0.65);
+
                  // robot.topIntake.setPower(1);
                  //robot.windmill.setPower(1);
 
-             } else {
-                 robot.intake.setPower(0);
-                 //robot.topIntake.setPower(0);
-                 //  robot.windmill.setPower(0);
+                 if (gamepad1.dpad_down && System.currentTimeMillis() - lastPressed > 500) {
+                     lastPressed = System.currentTimeMillis();
+                     motorOn = !motorOn;
+                     if (robot.intakeLeft.getPower() == 0 && robot.intakeRight.getPower() == 0) {
+                         robot.intakeLeft.setPower(1);
+                         robot.intakeRight.setPower(1);
+                         // robot.topIntake.setPower(1);
+                         //robot.windmill.setPower(1);
 
-             }}
-
- //////////////////turntable////////////////////
-         if(gamepad1.cross && System.currentTimeMillis() - lastPressed > 500) {
-             lastPressed = System.currentTimeMillis();
-             motorOn = !motorOn;
-             if(robot.turntable.getPower() == 0)
-             {
-                 robot.turntable.setPower(1);
-
-             } else
-                 {
-                 robot.turntable.setPower(0);
+                     } else {
+                         robot.intakeRight.setPower(0);
+                         robot.intakeLeft.setPower(0);
+                         //robot.topIntake.setPower(0);
+                         //  robot.windmill.setPower(0);
 
 
-             }}
-/////////////////////////////
+                     }
+                 }
+
+                 //////////////////turntable////////////////////
+                 if (gamepad1.cross && System.currentTimeMillis() - lastPressed > 500) {
+                     lastPressed = System.currentTimeMillis();
+                     motorOn = !motorOn;
+                     if (robot.turntable.getPower() == 0) {
+                         robot.turntable.setPower(1);
+
+                     } else {
+                         robot.turntable.setPower(0);
 
 
+                     }
+                 }
 
 
-/////////////////Controlled Arm and Elbow////////////
+/////////////////////////////doors/////////////////////////
+                 if (gamepad1.right_bumper) {
+                     robot.frontDoor.setPosition(0.5);
+                 } else {
+                     robot.frontDoor.setPosition(0);
+                 }
 
-         if (gamepad1.dpad_left) {
-             armTarget = armTop;
-             elbowTarget = elbowTop;
-         }
-
-         if (gamepad1.dpad_right){
-             armTarget= armIntake;
-             elbowTarget = elbowIntake;
-         }
-         if (gamepad1.circle) {
-             robot.arm.setTargetPosition(armTarget);
-             robot.elbow.setTargetPosition(elbowTarget);
-
-             robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-             robot.elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-             while (robot.arm.isBusy() && robot.elbow.isBusy()) {
-                 telemetry.addData("ARM", "Running to %7d : %7d",
-                         armTarget,
-                         robot.arm.getCurrentPosition());
-                 telemetry.addData("ELBOW", "Running to %7d : %7d",
-                         elbowTarget,
-                         robot.elbow.getCurrentPosition());
-                 telemetry.update();
+                 if (gamepad1.right_trigger > 0.5) {
+                     robot.backDoor.setPosition(0.5);
+                 } else {
+                     robot.backDoor.setPosition(0);
+                 }
 
 
-             // Stop all motion;
-             robot.backLeft.setPower(0);
-             robot.backRight.setPower(0);
+/////////////////Controlled Arm////////////
+/*
+                 if (gamepad1.dpad_left) {
+                     armTarget = armTop;
+                 }
 
-             // Turn off RUN_TO_POSITION
-             robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-             robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-             robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-             robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
+                 if (gamepad1.dpad_left) {
+                     armTarget = armTop;
+                 }
 
 
-         }
+                 if (gamepad1.dpad_right) {
+                     armTarget = armIntake;
+                 }
+                 if (gamepad1.circle) {
+                     robot.arm.setTargetPosition(armTarget);
 
+                     robot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                     while (robot.arm.isBusy()) {
+
+                         telemetry.addData("ARM", "Running to %7d : %7d",
+                                 armTarget,
+                                 robot.arm.getCurrentPosition());
+                         telemetry.update();
+
+
+                         telemetry.addData("ARM", "Running to %7d : %7d",
+                                 armTarget,
+                                 robot.arm.getCurrentPosition());
+                         telemetry.update();
+
+                         // Stop all motion;
+                         robot.backLeft.setPower(0);
+                         robot.backRight.setPower(0);
+
+                         // Turn off RUN_TO_POSITION
+                         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                     }
+
+
+                         // Stop all motion;
+                         robot.backLeft.setPower(0);
+                         robot.backRight.setPower(0);
+
+                         // Turn off RUN_TO_POSITION
+                         robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                         robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                     }
+
+                 }
+
+
+                 }
+*/
 /////////////////// DriverControl Functions/////////////////////
- /*
-     public void shootring3() {
-         robot.ringFeeder.setPosition(.48);
-         for (int i = 0; i < 3; i++) {
-             timer.reset();
-             while (timer.time(TimeUnit.MILLISECONDS) < 400) {
-                 robot.ringFeeder.setPosition(.48);
-             }
-             robot.ringFeeder.setPosition(.78);
-             timer.reset();
-             while (timer.time(TimeUnit.MILLISECONDS) < 400) {
-                 robot.ringFeeder.setPosition(.78);
-             }
-         }
-         robot.ringFeeder.setPosition(.48);
-     }
-     */
+
              }
          }
 
 
+     }}

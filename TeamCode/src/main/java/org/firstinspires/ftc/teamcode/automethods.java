@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class automethods extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
+
     ElapsedTime timer = new ElapsedTime();
 
 
@@ -33,8 +34,9 @@ public class automethods extends LinearOpMode {
 
 
 
-    static final double COUNTS_PER_MOTOR_REV = 537.6;    //need to adjust for big wheels
-    static final double WHEEL_DIAMETER_INCHES = 3.937;     // For figuring circ0umference
+    static final double COUNTS_PER_MOTOR_REV = 537.7;    //need to adjust for big wheels
+    static final double WHEEL_DIAMETER_INCHES = 3.77953;     // For figuring circumference
+
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
@@ -66,7 +68,7 @@ public class automethods extends LinearOpMode {
            // robot.cannon.setPower(.86);//////necessary to shoot accurately///////////
 
             // Determine new target position, and pass to motor controller
-            newLeftFrontTarget = robot.frontRight.getCurrentPosition() + (int) (-inches * COUNTS_PER_INCH);
+            newLeftFrontTarget = robot.frontLeft.getCurrentPosition() + (int) (-inches * COUNTS_PER_INCH);
             newRightFrontTarget = robot.frontRight.getCurrentPosition() + (int) (-inches * COUNTS_PER_INCH);
             newLeftBackTarget = robot.backLeft.getCurrentPosition() + (int) (-inches * COUNTS_PER_INCH);
             newRightBackTarget = robot.backRight.getCurrentPosition() + (int) (-inches * COUNTS_PER_INCH);
@@ -169,12 +171,33 @@ public class automethods extends LinearOpMode {
             }
     }
 */
+public void startturn(double speed, double timeoutS)
+{
+    if (opModeIsActive()) {
+        // reset the timeout time and start motion.
+        runtime.reset();
+        robot.turntable.setPower(speed);
+        // keep looping while we are still active, and there is time left, and both motors are running.
+        // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+        // its target position, the motion will stop.  This is "safer" in the event that the robot will
+        // always end the motion as soon as possible.
+        // However, if you require that BOTH motors have finished their moves before the robot continues
+        // onto the next step, use (isBusy() || isBusy()) in the loop test.
+        while (opModeIsActive() &&
+                (runtime.seconds() < timeoutS)) {
+            // Display it for the driver.
+            telemetry.addData("Running", "True");
+            telemetry.update();
+        }
+        // Stop all motion;
+        robot.turntable.setPower(0);
 
+    }}
 
     //////////////////////////turning////////////////////
     public void imuTurn(double speed, double angle) {
 
-        // keep looping while we are still active, and not on heading.
+        // keep looping while we are still actifve, and not on heading.
         while (opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF)) {
             // Update telemetry & Allow time for other processes to run.
             telemetry.update();
@@ -215,6 +238,7 @@ public class automethods extends LinearOpMode {
 
         return onTarget;
     }
+    //////////////////////////////////////Barcode////////////////
 
     public double getError(double targetAngle) {
 
@@ -324,7 +348,10 @@ public class automethods extends LinearOpMode {
         robot.backLeft.setPower(0);
         robot.backRight.setPower(0);
         // robot.wobble.setPower(0);
-        robot.intake.setPower(0);
+
+        robot.intakeLeft.setPower(0);
+        robot.intakeRight.setPower(0);
+
     }
 
 
