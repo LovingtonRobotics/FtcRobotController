@@ -26,7 +26,7 @@ public class HardwarePushbot {
     public static DcMotor backLeft = null;
     public static DcMotor frontRight = null;
     public static DcMotor backRight = null;
-
+    public static DcMotor armIntake = null;
 
     public static DcMotor arm = null;
     public static DcMotor intakeRight = null;
@@ -88,7 +88,9 @@ public class HardwarePushbot {
 
         // Define and initialize Servos
         turntable =  hwMap.get(CRServo.class, "turntable");
+
         backDoor = hwMap.get(Servo.class, "backDoor");
+
         frontDoor = hwMap.get(Servo.class, "frontDoor");
 
 
@@ -117,6 +119,7 @@ public class HardwarePushbot {
         frontRight.setPower(0);
         backRight.setPower(0);
         arm.setPower(0);
+
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
