@@ -5,18 +5,27 @@
 ///////////////////////////Control HUB//////////////////////////////
 
 //////////////////////Motors//////////////
-0---frontleft
+0---frontLeft
 1---frontRight
-2---backleft
+2---backLeft
 3---intakeLeft
 //////////////////////Servos////////////
-0---turntable
+0---turntableLeft
+1---claw
+2---shippingHubServo
+
+
 ///////////////////////////Expansion HUB//////////////////////////////
 
 ///////////////////Motors/////////
-0---arm
+?---slide
 1---backRight
 2---intakeRight
+?---pivot
 ////////////////////Servos////////////
+3--- turntableRight
 4---backDoor
 5---frontDoor
+
+
+

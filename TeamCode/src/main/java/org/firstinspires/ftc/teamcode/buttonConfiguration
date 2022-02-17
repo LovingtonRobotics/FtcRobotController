@@ -1,0 +1,8 @@
+right_trigger: slow mode on all wheels
+left_bumper: slide out
+left_trigger: slide in
+square: Retrieve
+triangle: Close door
+circle: Deliver
+dpad-down: intakes
+cross: turntableLeft && turntableRight

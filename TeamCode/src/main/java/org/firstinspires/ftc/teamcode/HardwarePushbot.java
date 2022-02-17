@@ -26,9 +26,11 @@ public class HardwarePushbot {
     public static DcMotor backLeft = null;
     public static DcMotor frontRight = null;
     public static DcMotor backRight = null;
-    public static DcMotor armIntake = null;
 
-    public static DcMotor arm = null;
+    public static DcMotor slide = null;
+    public static DcMotor pivot = null;
+
+
     public static DcMotor intakeRight = null;
     public static DcMotor intakeLeft = null;
 
@@ -43,7 +45,10 @@ public class HardwarePushbot {
     //public static DistanceSensor FrontDistance = null;
     //public static DigitalChannel CascadeTouch = null;  // Hardware Device Object
     public static TouchSensor armstop = null;
-    public static CRServo turntable = null;
+
+    public static CRServo turntableLeft = null;
+    public static CRServo turntableRight = null;
+
     public static Servo frontDoor = null;
     public static Servo backDoor = null;
 
@@ -75,7 +80,9 @@ public class HardwarePushbot {
         backLeft = hwMap.get(DcMotor.class, "backLeft");
         frontRight = hwMap.get(DcMotor.class, "frontRight");
         backRight = hwMap.get(DcMotor.class, "backRight");
-        arm = hwMap.get(DcMotor.class, "arm");
+
+        slide = hwMap.get(DcMotor.class, "slide");
+        pivot = hwMap.get(DcMotor.class, "pivot");
 
         intakeLeft = hwMap.get(DcMotor.class, "intakeLeft");
         intakeRight = hwMap.get(DcMotor.class, "intakeRight");
@@ -87,7 +94,9 @@ public class HardwarePushbot {
 
 
         // Define and initialize Servos
-        turntable =  hwMap.get(CRServo.class, "turntable");
+        turntableLeft =  hwMap.get(CRServo.class, "turntableLeft");
+
+        turntableRight =  hwMap.get(CRServo.class, "turntableRight");
 
         backDoor = hwMap.get(Servo.class, "backDoor");
 
@@ -109,17 +118,22 @@ public class HardwarePushbot {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
-        arm.setDirection(DcMotor.Direction.REVERSE);
+
+        slide.setDirection(DcMotor.Direction.FORWARD);
+        pivot.setDirection(DcMotorSimple.Direction.FORWARD);
+
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         intakeRight.setDirection(DcMotor.Direction.FORWARD);
+
 
         // Set all motors to zero power
         frontLeft.setPower(0);
         backLeft.setPower(0);
         frontRight.setPower(0);
         backRight.setPower(0);
-        arm.setPower(0);
 
+        slide.setPower(0);
+        pivot.setPower(0);
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
@@ -133,7 +147,9 @@ public class HardwarePushbot {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -147,7 +163,9 @@ public class HardwarePushbot {
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intakeLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intakeRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
