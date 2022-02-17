@@ -194,7 +194,13 @@ import java.util.concurrent.TimeUnit;
 
                      }
                  }
-
+//////////////////////////////////////////claw
+         if(gamepad1.dpad_left){////////////close
+             robot.claw.setPosition(0);
+         }
+         if(gamepad1.dpad_right){
+             robot.claw.setPosition(86);
+         }
 
 
 

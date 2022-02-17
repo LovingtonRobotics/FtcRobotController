@@ -52,6 +52,7 @@ public class HardwarePushbot {
     public static Servo frontDoor = null;
     public static Servo backDoor = null;
     public static Servo shippingHubServo = null;
+    public static Servo claw = null;
 
 
 
@@ -96,14 +97,12 @@ public class HardwarePushbot {
 
         // Define and initialize Servos
         turntableLeft =  hwMap.get(CRServo.class, "turntableLeft");
-
         turntableRight =  hwMap.get(CRServo.class, "turntableRight");
 
         backDoor = hwMap.get(Servo.class, "backDoor");
-
         frontDoor = hwMap.get(Servo.class, "frontDoor");
         shippingHubServo = hwMap.get(Servo.class, "shippingHubServo");
-
+        claw = hwMap.get(Servo.class, "claw");
 
 
         //Define and Initialize Sensors///////////////////

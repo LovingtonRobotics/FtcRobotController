@@ -6,7 +6,8 @@ triangle: Close door
 circle: Deliver
 cross: turntableLeft && turntableRight
 dpad-down: intakes
-
+dpad_left: open claw
+dpad_left: close claw
 
 right_bumper: lower and raise shippingHubServo
 
