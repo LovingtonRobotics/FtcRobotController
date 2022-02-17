@@ -40,11 +40,10 @@ public class autonomousBlue1 extends automethods {
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
 
-        strafeRight(.5,-90,6);
+        strafeRight(.5,60,6);
         imuHold(1);
-        //turntable
-        strafeRight(.5, 180,8);
-
+        startturn(1,4);
+        strafeRight(.5, -180,8);
         //  rpos = returnRingPosition(3);
 
 

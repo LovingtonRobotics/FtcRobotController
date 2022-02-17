@@ -40,9 +40,9 @@ public class autonomousRed2 extends automethods {
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
 
-        strafeRight(.5,-90,6);
+        strafeRight(.5,-120,6);
         imuHold(1);
-        //turntable
+        startturn(1,4);
         strafeRight(.5, 180,8);
 
         //  rpos = returnRingPosition(3);
