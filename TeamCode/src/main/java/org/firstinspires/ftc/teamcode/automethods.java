@@ -176,7 +176,9 @@ public void startturn(double speed, double timeoutS)
     if (opModeIsActive()) {
         // reset the timeout time and start motion.
         runtime.reset();
-        robot.turntable.setPower(speed);
+        robot.turntableLeft.setPower(speed);
+        robot.turntableRight.setPower(speed);
+
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
         // its target position, the motion will stop.  This is "safer" in the event that the robot will
@@ -190,7 +192,9 @@ public void startturn(double speed, double timeoutS)
             telemetry.update();
         }
         // Stop all motion;
-        robot.turntable.setPower(0);
+        robot.turntableLeft.setPower(0);
+        robot.turntableRight.setPower(0);
+
 
     }}
 
@@ -326,6 +330,7 @@ public void startturn(double speed, double timeoutS)
         }
 
     }
+
 
     public float getZAngle() {
         return (robot.imu.getAngularOrientation(AxesReference.INTRINSIC,AxesOrder.ZYX,AngleUnit.DEGREES).firstAngle);

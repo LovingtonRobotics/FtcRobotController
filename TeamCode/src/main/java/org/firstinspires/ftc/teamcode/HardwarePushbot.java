@@ -43,7 +43,9 @@ public class HardwarePushbot {
     //public static DistanceSensor FrontDistance = null;
     //public static DigitalChannel CascadeTouch = null;  // Hardware Device Object
     public static TouchSensor armstop = null;
-    public static CRServo turntable = null;
+    public static CRServo turntableLeft = null;
+    public static CRServo turntableRight = null;
+
     public static Servo frontDoor = null;
     public static Servo backDoor = null;
 
@@ -87,7 +89,9 @@ public class HardwarePushbot {
 
 
         // Define and initialize Servos
-        turntable =  hwMap.get(CRServo.class, "turntable");
+        turntableLeft =  hwMap.get(CRServo.class, "turntableLeft");
+        turntableRight =  hwMap.get(CRServo.class, "turntableRight");
+
 
         backDoor = hwMap.get(Servo.class, "backDoor");
 

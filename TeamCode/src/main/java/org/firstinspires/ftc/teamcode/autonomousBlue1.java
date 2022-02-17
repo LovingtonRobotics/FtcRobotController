@@ -1,13 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.BarcodePositionDetector;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 @Autonomous(name="autonomous", group="Test")
-public class autonomous extends automethods {
+public class autonomousBlue1 extends automethods {
     HardwarePushbot robot = new HardwarePushbot();// Use a Pushbot's hardware
 
 
@@ -44,8 +40,10 @@ public class autonomous extends automethods {
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
 
-    encoderDrive(.5, 80, 6);
         strafeRight(.5,-90,6);
+        imuHold(1);
+        //turntable
+        strafeRight(.5, 180,8);
 
         //  rpos = returnRingPosition(3);
 
