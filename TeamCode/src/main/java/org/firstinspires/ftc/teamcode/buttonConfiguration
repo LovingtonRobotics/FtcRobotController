@@ -4,5 +4,14 @@ left_trigger: slide in
 square: Retrieve
 triangle: Close door
 circle: Deliver
-dpad-down: intakes
 cross: turntableLeft && turntableRight
+dpad-down: intakes
+
+
+right_bumper: lower and raise shippingHubServo
+
+Available buttons:
+right_bumper
+dpad_left
+dpad_up
+dpad_right

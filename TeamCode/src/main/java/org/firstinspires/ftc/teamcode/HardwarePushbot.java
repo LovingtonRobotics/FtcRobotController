@@ -51,6 +51,7 @@ public class HardwarePushbot {
 
     public static Servo frontDoor = null;
     public static Servo backDoor = null;
+    public static Servo shippingHubServo = null;
 
 
 
@@ -101,7 +102,7 @@ public class HardwarePushbot {
         backDoor = hwMap.get(Servo.class, "backDoor");
 
         frontDoor = hwMap.get(Servo.class, "frontDoor");
-
+        shippingHubServo = hwMap.get(Servo.class, "shippingHubServo");
 
 
 

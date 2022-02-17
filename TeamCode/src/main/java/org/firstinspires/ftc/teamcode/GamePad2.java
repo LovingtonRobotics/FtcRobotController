@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
      int armTarget;
      int armIntake;
      int armTop;
-     int retrieve_count;
+     int bumper_count;
      int door_count;
      int deliver_count;
 
@@ -164,7 +164,21 @@ import java.util.concurrent.TimeUnit;
 
                      }
                  }
+//////////////////////////////////shippingHubServo
+         if (gamepad1.right_bumper) {
+             if (!buttonPressed) {
+                 bumper_count += 1;
+                 buttonPressed = true;
+             } else {
+                 buttonPressed = false;
+             }
 
+             if (bumper_count % 2 == 0) {
+                 robot.shippingHubServo.setPosition(.86);
+             } else {
+                 robot.shippingHubServo.setPosition(0);
+             }
+         }
                  //////////////////turntable////////////////////
                  if (gamepad1.cross && System.currentTimeMillis() - lastPressed > 500) {
                      lastPressed = System.currentTimeMillis();
@@ -182,7 +196,6 @@ import java.util.concurrent.TimeUnit;
                  }
 
 
-/////////////////////////////doors/////////////////////////
 
 
 

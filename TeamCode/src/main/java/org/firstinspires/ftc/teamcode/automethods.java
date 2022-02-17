@@ -177,6 +177,7 @@ public void startturn(double speed, double timeoutS)
         // reset the timeout time and start motion.
         runtime.reset();
         robot.turntableLeft.setPower(speed);
+        robot.turntableRight.setPower(speed);
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
         // its target position, the motion will stop.  This is "safer" in the event that the robot will
@@ -191,7 +192,7 @@ public void startturn(double speed, double timeoutS)
         }
         // Stop all motion;
         robot.turntableLeft.setPower(0);
-
+        robot.turntableRight.setPower(0);
     }}
 
     //////////////////////////turning////////////////////
