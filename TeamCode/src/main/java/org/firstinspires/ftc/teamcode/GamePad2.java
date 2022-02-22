@@ -25,14 +25,13 @@ import java.util.concurrent.TimeUnit;
      double power;
 
 
-     int armStart;
-     int armTarget;
-     int armIntake;
+     int slideTarget;
+     int slideIntake;
+
      int armTop;
      int bumper_count;
      int door_count;
      int deliver_count;
-
 
 
 
@@ -48,14 +47,12 @@ import java.util.concurrent.TimeUnit;
      @Override
      public void init() {
          robot.init(hardwareMap);
-
      }
 
 
      @Override
      public void loop() {
          telemetry.update();
-
          /////Drive System//////
          h = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
          robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;

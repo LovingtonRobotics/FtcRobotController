@@ -22,6 +22,7 @@ public class HardwarePushbot {
     /* Public OpMode members. */
     ///////////////// Motors
 
+
     public static DcMotor frontLeft = null;
     public static DcMotor backLeft = null;
     public static DcMotor frontRight = null;
@@ -164,7 +165,7 @@ public class HardwarePushbot {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intakeLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -177,6 +178,7 @@ public class HardwarePushbot {
         public static void autoinit (HardwareMap ahwMap){
             // Save reference to Hardware map
             hwMap = ahwMap;
+            int slideStart = slide.getCurrentPosition();
 
             //imu stuff
             imu = hwMap.get(BNO055IMU.class, "imu");
@@ -190,8 +192,7 @@ public class HardwarePushbot {
             imu.initialize(parameters);
 
 
-
-            //////close claw
+        //////close claw
             //
         }
     }

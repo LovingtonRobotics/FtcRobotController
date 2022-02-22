@@ -21,17 +21,18 @@ import java.util.concurrent.TimeUnit;
 @Autonomous(name="A", group="Park")
 
 /* This autonomous program is designed to go forward, pick up a stone, and deliver it to the blue tray, before returning and repeating it once more.*/
-
 public class automethods extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     ElapsedTime timer = new ElapsedTime();
-
+    int slideBottom;
+    int slideMiddle;
+    int slideTop;
+    int slideStart;
 
     /* Declare OpMode members. */
 ///////////////////////////////////wheel calibration//////////////////////////
     HardwarePushbot robot = new HardwarePushbot();   // Use a Pushbot's hardware
-
 
 
     static final double COUNTS_PER_MOTOR_REV = 537.7;    //need to adjust for big wheels
@@ -355,5 +356,18 @@ public void startturn(double speed, double timeoutS)
 
     }
 
+    public void setLevel(double level){
+    if (level == 1){
+        robot.slide.setTargetPosition(slideBottom);
+    slideBottom = slideStart-100;}
+    else if (level == 2){
+        robot.slide.setTargetPosition(slideMiddle);
+    slideMiddle = slideStart-300;}
+    else if (level == 3){
+        robot.slide.setTargetPosition(slideTop);
+    slideTop = slideStart-500;}
+
+
+    }
 
 }
