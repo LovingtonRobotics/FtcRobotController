@@ -43,7 +43,7 @@ public class autonomous extends automethods {
 
         encoderDrive(.5, 80, 6);
         strafeRight(.5,-90,6);
-
+        setLevel(2);
         //  rpos = returnRingPosition(3);
 
 
