@@ -52,6 +52,8 @@ public class automethods extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+
     }
 
 
@@ -358,6 +360,7 @@ public void startturn(double speed, double timeoutS)
         robot.intakeRight.setPower(0);
 
     }
+
 
 
 }

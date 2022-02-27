@@ -2,13 +2,28 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="autonomous", group="Test")
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvWebcam;
+
+@Autonomous(name="autonomousBlue1", group="Test")
 public class autonomousBlue1 extends automethods {
     HardwarePushbot robot = new HardwarePushbot();// Use a Pushbot's hardware
 
 
     @Override
     public void runOpMode() throws InterruptedException {
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+       /* webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
+
+        pipeline = new BarcodePositionDetector.SkystoneDeterminationPipeline();
+        webcam.setPipeline(pipeline);
+
+        // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
+        // out when the RC activity is in portrait. We do our actual image processing assuming
+        // landscape orientation, though.
+        webcam.setViewportRenderingPolicy(OpenCvWebcam.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+        webcam.openCameraDeviceAsync(new OpenCvWebcam.AsyncCameraOpenListener()
         robot.init(hardwareMap);
      //   robot.autoinit(hardwareMap);
 

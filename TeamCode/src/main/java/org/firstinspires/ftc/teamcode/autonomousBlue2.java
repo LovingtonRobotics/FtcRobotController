@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.BarcodePositionDetector;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
-@Autonomous(name="autonomous", group="Test")
+@Autonomous(name="autonomousBlue2", group="Test")
 public class autonomousBlue2 extends automethods {
     HardwarePushbot robot = new HardwarePushbot();// Use a Pushbot's hardware
 
