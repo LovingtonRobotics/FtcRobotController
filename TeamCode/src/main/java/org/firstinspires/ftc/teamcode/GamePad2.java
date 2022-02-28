@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.concurrent.TimeUnit;
 
 
- @TeleOp(name="Gamepad675", group="Linear Opmode")
+ @TeleOp(name="Gamepad684", group="Linear Opmode")
  public class GamePad2 extends OpMode {
      HardwarePushbot robot = new HardwarePushbot();
 
@@ -86,7 +86,7 @@ import java.util.concurrent.TimeUnit;
 
 //////////////////////////////////arm//////////////////////////////
 
-         if (gamepad1.left_bumper) {//goes up
+         if (gamepad1.left_bumper) {//goes
              robot.arm.setPower(0.5);
 
 
@@ -168,7 +168,6 @@ import java.util.concurrent.TimeUnit;
                      if (robot.turntableLeft.getPower() == 0) {
                          robot.turntableLeft.setPower(1);
                          robot.turntableRight.setPower(1);
-
 
 
                      } else {

@@ -15,6 +15,11 @@ public class autonomousBlue2 extends automethods {
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
      //   robot.autoinit(hardwareMap);
+        /* webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
+
+        pipeline = new BarcodePositionDetector.SkystoneDeterminationPipeline();
+        webcam.setPipeline(pipeline);
+
 
 
 
