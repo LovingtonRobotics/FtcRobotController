@@ -17,7 +17,6 @@ public class autonomous extends automethods {
      //   robot.autoinit(hardwareMap);
 
 
-
        /* int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
         //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
@@ -38,15 +37,13 @@ public class autonomous extends automethods {
         });
 */
 
-
         waitForStart();
-
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
 
-    encoderDrive(.5, 80, 6);
+        encoderDrive(.5, 80, 6);
         strafeRight(.5,-90,6);
-
+        setLevel(2);
         //  rpos = returnRingPosition(3);
 
 

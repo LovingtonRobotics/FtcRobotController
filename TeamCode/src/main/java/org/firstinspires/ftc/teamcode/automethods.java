@@ -21,17 +21,16 @@ import java.util.concurrent.TimeUnit;
 @Autonomous(name="A", group="Park")
 
 /* This autonomous program is designed to go forward, pick up a stone, and deliver it to the blue tray, before returning and repeating it once more.*/
-
 public class automethods extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     ElapsedTime timer = new ElapsedTime();
-
-
+    String slideDataSTR;
+    int slideStart;
+    int slideTarget;
     /* Declare OpMode members. */
 ///////////////////////////////////wheel calibration//////////////////////////
     HardwarePushbot robot = new HardwarePushbot();   // Use a Pushbot's hardware
-
 
 
     static final double COUNTS_PER_MOTOR_REV = 537.7;    //need to adjust for big wheels
@@ -176,7 +175,8 @@ public void startturn(double speed, double timeoutS)
     if (opModeIsActive()) {
         // reset the timeout time and start motion.
         runtime.reset();
-        robot.turntable.setPower(speed);
+        robot.turntableLeft.setPower(speed);
+        robot.turntableRight.setPower(speed);
         // keep looping while we are still active, and there is time left, and both motors are running.
         // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
         // its target position, the motion will stop.  This is "safer" in the event that the robot will
@@ -190,8 +190,8 @@ public void startturn(double speed, double timeoutS)
             telemetry.update();
         }
         // Stop all motion;
-        robot.turntable.setPower(0);
-
+        robot.turntableLeft.setPower(0);
+        robot.turntableRight.setPower(0);
     }}
 
     //////////////////////////turning////////////////////
@@ -354,5 +354,33 @@ public void startturn(double speed, double timeoutS)
 
     }
 
+    public void setLevel(double level){
+    if (level == 1){
+        slideTarget = slideStart-100;
+        slideDataSTR = "BOTTOM";
+    }
+    else if (level == 2){
+        slideTarget = slideStart-300;
+        slideDataSTR = "MIDDLE";
+    }
+    else if (level == 3){
+        slideTarget = slideStart-500;
+        slideDataSTR = "TOP";
+    }
+
+    robot.slide.setTargetPosition(slideTarget);
+    //move the slide
+
+        robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (robot.slide.isBusy()){
+            telemetry.addData("SLIDE", "running to %7d : %7d",
+                    slideTarget,
+                    robot.slide.getCurrentPosition());
+            telemetry.addData(slideDataSTR);
+            telemetry.update();
+        }
+
+
+    }
 
 }

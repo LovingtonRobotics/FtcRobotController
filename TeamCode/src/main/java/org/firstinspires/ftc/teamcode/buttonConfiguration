@@ -1,0 +1,18 @@
+right_trigger: slow mode on all wheels
+left_bumper: slide out
+left_trigger: slide in
+square: Retrieve
+triangle: Close door
+circle: Deliver
+cross: turntableLeft && turntableRight
+dpad-down: intakes
+dpad_left: open claw
+dpad_left: close claw
+
+right_bumper: lower and raise shippingHubServo
+
+Available buttons:
+right_bumper
+dpad_left
+dpad_up
+dpad_right
