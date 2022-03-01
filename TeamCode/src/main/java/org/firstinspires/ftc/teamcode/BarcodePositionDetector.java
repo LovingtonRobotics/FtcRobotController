@@ -74,7 +74,7 @@ public class BarcodePositionDetector extends LinearOpMode
 
             {
 
-                webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                webcam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -121,9 +121,9 @@ public class BarcodePositionDetector extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(20,20);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(40,60);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(60,100);
         static final int REGION_WIDTH = 20;
         static final int REGION_HEIGHT = 20;
 

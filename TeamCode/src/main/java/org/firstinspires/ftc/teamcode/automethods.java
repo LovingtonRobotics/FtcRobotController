@@ -354,7 +354,7 @@ public void startturn(double speed, double timeoutS)
 
     }
 
-    public void setLevel(double level){
+ /*   public void setLevel(double level){
     if (level == 1){
         slideTarget = slideStart-100;
         slideDataSTR = "BOTTOM";
@@ -371,16 +371,15 @@ public void startturn(double speed, double timeoutS)
     robot.slide.setTargetPosition(slideTarget);
     //move the slide
 
-        robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    //    robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while (robot.slide.isBusy()){
             telemetry.addData("SLIDE", "running to %7d : %7d",
                     slideTarget,
                     robot.slide.getCurrentPosition());
-            telemetry.addData(slideDataSTR);
             telemetry.update();
         }
 
 
-    }
+    }*/
 
 }

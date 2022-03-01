@@ -2,10 +2,16 @@
 
 import android.os.SystemClock;
 
+import com.qualcomm.robotcore.eventloop.opmode.FtcRobotControllerServiceState;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.ftccommon.FtcRobotControllerService;
+
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -33,6 +39,7 @@ import java.util.concurrent.TimeUnit;
      int door_count;
      int deliver_count;
 
+     int distance;
 
 
      int acount;
@@ -81,11 +88,11 @@ import java.util.concurrent.TimeUnit;
 
 //////////////////////////////////arm//////////////////////////////
 
-         if (gamepad1.left_bumper) {//goes
+         if (gamepad1.left_bumper) {//slide up
              robot.slide.setPower(0.5);
 
 
-         } else if (gamepad1.left_trigger > .5) {// goes down
+         } else if (gamepad1.left_trigger > .5) {// slide down
              robot.slide.setPower(-0.5);
 
 
@@ -95,53 +102,21 @@ import java.util.concurrent.TimeUnit;
 
          ///////////////////////doors//////////////////////////////
          if(gamepad1.square){
-             robot.frontDoor.setPosition(86);////////retrieve state
+             robot.frontDoor.setPosition(20);////////door open to recieve, needs adjustment
          }
          if(gamepad1.triangle){
-             robot.frontDoor.setPosition(0);
+             robot.frontDoor.setPosition(0);///////////////door closed for when traveling up, needs adjustment
          }
          if(gamepad1.circle){
              robot.frontDoor.setPosition(0);
-             robot.backDoor.setPosition(86);
+             robot.backDoor.setPosition(20);///////doors open and go backward to push freight onto hub, needs adjustment
          }
 
-/*
-         if (gamepad1.triangle) {
-             if (!buttonPressed) {
-                 retrieve_count += 1;
-                 buttonPressed = true;
-             } else {
-                 buttonPressed = false;
-             }
-
-             if (retrieve_count % 2 == 0) {
-                 robot.frontDoor.setPosition(86);
-             } else {
-                 robot.frontDoor.setPosition(0);
-             }
-         }
-
-         if (gamepad1.square) {
-             if (!buttonPressed) {
-                 door_count += 1;
-                 buttonPressed = true;
-             } else {
-                 buttonPressed = false;
-             }
-
-             if (door_count % 2 == 0) {
-                 robot.backDoor.setPosition(86);
-             } else {
-                 robot.backDoor.setPosition(0);
-             }
-         }
-*/
 
          ///////////////////////////intake//////////////////
 
 
-                 // robot.topIntake.setPower(1);
-                 //robot.windmill.setPower(1);
+
 
                  if (gamepad1.dpad_down && System.currentTimeMillis() - lastPressed > 500) {
                      lastPressed = System.currentTimeMillis();
@@ -149,8 +124,8 @@ import java.util.concurrent.TimeUnit;
                      if (robot.intakeLeft.getPower() == 0 && robot.intakeRight.getPower() == 0) {
                          robot.intakeLeft.setPower(1);
                          robot.intakeRight.setPower(1);
-                         // robot.topIntake.setPower(1);
-                         //robot.windmill.setPower(1);
+
+                         /////////turn on both intakes
 
                      } else {
                          robot.intakeRight.setPower(0);
@@ -158,6 +133,7 @@ import java.util.concurrent.TimeUnit;
                          //robot.topIntake.setPower(0);
                          //  robot.windmill.setPower(0);
 
+                         //////turn off both intakes
 
                      }
                  }
@@ -171,11 +147,13 @@ import java.util.concurrent.TimeUnit;
              }
 
              if (bumper_count % 2 == 0) {
-                 robot.shippingHubServo.setPosition(.86);
+                 robot.shippingHubServo.setPosition(.86);///// goes up, needs adjustment
              } else {
-                 robot.shippingHubServo.setPosition(0);
+                 robot.shippingHubServo.setPosition(0);/////goes down, needs adjustment
              }
          }
+
+
                  //////////////////turntable////////////////////
                  if (gamepad1.cross && System.currentTimeMillis() - lastPressed > 500) {
                      lastPressed = System.currentTimeMillis();
@@ -183,25 +161,29 @@ import java.util.concurrent.TimeUnit;
                      if (robot.turntableLeft.getPower() == 0 && robot.turntableRight.getPower() == 0 ) {
                          robot.turntableLeft.setPower(1);
                          robot.turntableRight.setPower(-1);
+                         /////turns on both turntables
 
                      } else {
                          robot.turntableLeft.setPower(0);
                          robot.turntableRight.setPower(0);
-
+                         ///////////turns off the turntables
 
                      }
                  }
 //////////////////////////////////////////claw
-         if(gamepad1.dpad_left){////////////close
-             robot.claw.setPosition(0);
+         if(gamepad1.dpad_left){
+             robot.claw.setPosition(0);/////////closes claw,needs adjustment
          }
          if(gamepad1.dpad_right){
-             robot.claw.setPosition(86);
+             robot.claw.setPosition(86);/////////opens claw, needs adjustment
          }
 
 
+         /////////////////////////////rumble testing
 
-
+     /*   if(robot.colorDistance.getDistance(DistanceUnit.CM) < 10){
+            gamepad1.rumble(.3,.3,2000);
+        }*/
 /////////////////Controlled Arm////////////
 /*
                  if (gamepad1.dpad_left) {

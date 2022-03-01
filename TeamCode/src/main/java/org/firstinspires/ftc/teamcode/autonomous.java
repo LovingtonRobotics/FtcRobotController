@@ -43,32 +43,13 @@ public class autonomous extends automethods {
 
         encoderDrive(.5, 80, 6);
         strafeRight(.5,-90,6);
-        setLevel(2);
+     //   setLevel(2);
         //  rpos = returnRingPosition(3);
 
 
 ////////////////////////////////
 //
-      /*  if(rpos == RingPipeline.RingPosition.NONE){
-            encoderDrive(.55, 2, 5);
 
-
-
-        }
-        if(rpos == RingPipeline.RingPosition.ONE )
-
-        {
-            encoderDrive(.55, 10, 5);
-
-        }
-        if(rpos == RingPipeline.RingPosition.NONE)
-
-        {
-            encoderDrive(.55, 20, 5);
-
-
-
-        }*/
 
 
     }}

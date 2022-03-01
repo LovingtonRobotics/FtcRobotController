@@ -8,6 +8,8 @@ import android.view.View;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -29,7 +31,6 @@ public class HardwarePushbot {
     public static DcMotor backRight = null;
 
     public static DcMotor slide = null;
-    public static DcMotor pivot = null;
 
 
     public static DcMotor intakeRight = null;
@@ -55,6 +56,7 @@ public class HardwarePushbot {
     public static Servo shippingHubServo = null;
     public static Servo claw = null;
 
+   // public static ColorRangeSensor colorDistance = null;
 
 
 
@@ -85,12 +87,11 @@ public class HardwarePushbot {
         backRight = hwMap.get(DcMotor.class, "backRight");
 
         slide = hwMap.get(DcMotor.class, "slide");
-        pivot = hwMap.get(DcMotor.class, "pivot");
 
         intakeLeft = hwMap.get(DcMotor.class, "intakeLeft");
         intakeRight = hwMap.get(DcMotor.class, "intakeRight");
 
-
+      //  colorDistance = hwMap.get(ColorRangeSensor.class, "colorDistance");
 
 
 
@@ -121,7 +122,6 @@ public class HardwarePushbot {
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
         slide.setDirection(DcMotor.Direction.FORWARD);
-        pivot.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         intakeRight.setDirection(DcMotor.Direction.FORWARD);
@@ -134,7 +134,7 @@ public class HardwarePushbot {
         backRight.setPower(0);
 
         slide.setPower(0);
-        pivot.setPower(0);
+
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
@@ -150,7 +150,6 @@ public class HardwarePushbot {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -165,8 +164,7 @@ public class HardwarePushbot {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intakeLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intakeRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
