@@ -18,6 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -30,82 +31,16 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
-import org.openftc.easyopencv.OpenCvWebcam;
 
-/*
- * This sample demonstrates a basic (but battle-tested and essentially
- * 100% accurate) method of detecting the skystone when lined up with
- * the sample regions over the first 3 stones.
- */
-@TeleOp
-public class BarcodePositionDetector extends LinearOpMode
+
+
+public class BarcodeDeterminationPipeline extends OpenCvPipeline
 {
-    OpenCvWebcam webcam;
-    SkystoneDeterminationPipeline pipeline;
-
-    @Override
-    public void runOpMode() throws InterruptedException {
-
-        /**
-         * NOTE: Many comments have been omitted from this sample for the
-         * sake of conciseness. If you're just starting out with EasyOpenCv,
-         * you should take a look at {@link InternalCamera1Example} or its
-         * webcam counterpart, {@link WebcamExample} first.
-         */
-
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
-
-        pipeline = new SkystoneDeterminationPipeline();
-        webcam.setPipeline(pipeline);
-
-        // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
-        // out when the RC activity is in portrait. We do our actual image processing assuming
-        // landscape orientation, though.
-        webcam.setViewportRenderingPolicy(OpenCvWebcam.ViewportRenderingPolicy.OPTIMIZE_VIEW);
-        webcam.openCameraDeviceAsync(new OpenCvWebcam.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-
-            {
-
-                webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
-            }
-
-            @Override
-            public void onError(int errorCode)
-            {
-                /*
-                 * This will be called if the camera could not be opened
-                 */
-            }
-
-        });
-
-        waitForStart();
-
-        while (opModeIsActive())
-        {
-            telemetry.addData("Analysis", pipeline.getAnalysis());
-            telemetry.update();
-
-            // Don't burn CPU cycles busy-looping in this sample
-            sleep(50);
-        }
-    }
-
-    public static class SkystoneDeterminationPipeline extends OpenCvPipeline
-    {
-
         /*
          * An enum to define the skystone position
          */
-        public enum BarcodePosition
+        public enum barcodePosition
         {
             LEFT,
             CENTER,
@@ -121,9 +56,9 @@ public class BarcodePositionDetector extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0,20);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(60,20);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(80,20);
         static final int REGION_WIDTH = 20;
         static final int REGION_HEIGHT = 20;
 
@@ -172,7 +107,7 @@ public class BarcodePositionDetector extends LinearOpMode
         int avg1, avg2, avg3;
 
         // Volatile since accessed by OpMode thread w/o synchronization
-        private volatile BarcodePosition position = BarcodePosition.LEFT;
+        private volatile barcodePosition position = barcodePosition.LEFT;
 
         /*
          * This function takes the RGB frame, converts to YCrCb,
@@ -299,8 +234,8 @@ public class BarcodePositionDetector extends LinearOpMode
             /*
              * Find the max of the 3 averages
              */
-            int maxOneTwo = Math.max(avg1, avg2);
-            int max = Math.max(maxOneTwo, avg3);
+            int maxOneTwo = Math.min(avg1, avg2);
+            int max = Math.min(maxOneTwo, avg3);
 
             /*
              * Now that we found the max, we actually need to go and
@@ -308,7 +243,7 @@ public class BarcodePositionDetector extends LinearOpMode
              */
             if(max == avg1) // Was it from region 1?
             {
-                position = BarcodePosition.LEFT; // Record our analysis
+                position = barcodePosition.LEFT; // Record our analysis
 
                 /*
                  * Draw a solid rectangle on top of the chosen region.
@@ -323,7 +258,7 @@ public class BarcodePositionDetector extends LinearOpMode
             }
             else if(max == avg2) // Was it from region 2?
             {
-                position = BarcodePosition.CENTER; // Record our analysis
+                position = barcodePosition.CENTER; // Record our analysis
 
                 /*
                  * Draw a solid rectangle on top of the chosen region.
@@ -338,7 +273,7 @@ public class BarcodePositionDetector extends LinearOpMode
             }
             else if(max == avg3) // Was it from region 3?
             {
-                position = BarcodePosition.RIGHT; // Record our analysis
+                position = barcodePosition.RIGHT; // Record our analysis
 
                 /*
                  * Draw a solid rectangle on top of the chosen region.
@@ -363,10 +298,9 @@ public class BarcodePositionDetector extends LinearOpMode
         /*
          * Call this from the OpMode thread to obtain the latest analysis
          */
-        public BarcodePosition getAnalysis()
+        public barcodePosition getAnalysis()
         {
             return position;
         }
-
     }
-}
+

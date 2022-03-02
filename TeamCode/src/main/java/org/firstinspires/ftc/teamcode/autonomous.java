@@ -1,30 +1,30 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.BarcodePositionDetector;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 @Autonomous(name="autonomous", group="Test")
 public class autonomous extends automethods {
     HardwarePushbot robot = new HardwarePushbot();// Use a Pushbot's hardware
-
+    OpenCvWebcam webcam;
+    BarcodeDeterminationPipeline pipeline;
+    BarcodeDeterminationPipeline.barcodePosition barcodePos;
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
-     //   robot.autoinit(hardwareMap);
+        robot.autoinit(hardwareMap);
 
 
-       /* int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
-        //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         webcam.setPipeline(pipeline);
 
-        // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
-        // out when the RC activity is in portrait. We do our actual image processing assuming
-        // landscape orientation, though.
         webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
@@ -34,9 +34,17 @@ public class autonomous extends automethods {
             {
                 webcam.startStreaming(320,240, OpenCvCameraRotation.UPRIGHT);
             }
-        });
-*/
 
+            @Override
+            public void onError(int errorCode) {
+
+            }
+        });
+
+        while(opModeIsActive() && !isStarted()){
+            telemetry.addData("Analysis",pipeline.getAnalysis());
+
+        }
         waitForStart();
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
@@ -44,31 +52,32 @@ public class autonomous extends automethods {
         encoderDrive(.5, 80, 6);
         strafeRight(.5,-90,6);
         setLevel(2);
-        //  rpos = returnRingPosition(3);
+        barcodePos = BarcodeDeterminationPipeline.barcodePosition.CENTER;
 
 
 ////////////////////////////////
 //
-      /*  if(rpos == RingPipeline.RingPosition.NONE){
+        if(barcodePos == BarcodeDeterminationPipeline.barcodePosition.LEFT){
             encoderDrive(.55, 2, 5);
 
 
 
         }
-        if(rpos == RingPipeline.RingPosition.ONE )
+        if(barcodePos == BarcodeDeterminationPipeline.barcodePosition.CENTER )
 
         {
             encoderDrive(.55, 10, 5);
 
         }
-        if(rpos == RingPipeline.RingPosition.NONE)
-
-        {
-            encoderDrive(.55, 20, 5);
+        if(barcodePos == BarcodeDeterminationPipeline.barcodePosition.RIGHT){
 
 
+            encoderDrive(.55, 30, 5);
 
-        }*/
 
 
-    }}
+
+
+        }
+    }
+}
