@@ -27,11 +27,10 @@ Motors
 ?---slide
 1---backRight
 2---intakeRight
-?---shippingHubServo
 
 Servos
 
-3--- turntableRight
+3---turntableRight
 4---backDoor
 5---frontDoor
 

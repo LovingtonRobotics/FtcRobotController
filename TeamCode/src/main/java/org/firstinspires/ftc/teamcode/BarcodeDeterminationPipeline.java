@@ -37,9 +37,12 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class BarcodeDeterminationPipeline extends OpenCvPipeline
 {
+
+
         /*
          * An enum to define the skystone position
          */
+
         public enum barcodePosition
         {
             LEFT,

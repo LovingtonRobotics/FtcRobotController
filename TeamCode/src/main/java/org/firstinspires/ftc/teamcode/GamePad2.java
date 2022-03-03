@@ -22,6 +22,20 @@ import java.util.concurrent.TimeUnit;
      double frontRightPower;
      double backRightPower;
 
+
+     double pusherPushing;
+     double pusherClose;
+     double pusherOpen;
+
+     double doorClose;
+     double doorOpen;
+
+     double twisterDeliver;
+     double twisterNeutral;
+
+
+
+
      double power;
 
 
@@ -32,7 +46,6 @@ import java.util.concurrent.TimeUnit;
      int bumper_count;
      int door_count;
      int deliver_count;
-
 
 
      int acount;
@@ -48,6 +61,7 @@ import java.util.concurrent.TimeUnit;
      public void init() {
          robot.init(hardwareMap);
      }
+     int slideDown = robot.slide.getCurrentPosition();
 
 
      @Override
@@ -81,28 +95,25 @@ import java.util.concurrent.TimeUnit;
 
 //////////////////////////////////arm//////////////////////////////
 
-         if (gamepad1.left_bumper) {//goes
-             robot.slide.setPower(0.5);
-
-
-         } else if (gamepad1.left_trigger > .5) {// goes down
-             robot.slide.setPower(-0.5);
-
-
-         } else {
-             robot.slide.setPower(0);
+         if (gamepad1.left_bumper && !robot.slideStop.isPressed()) {//goes
+             setLevel(slideDown + 100);
          }
 
          ///////////////////////doors//////////////////////////////
          if(gamepad1.square){
-             robot.frontDoor.setPosition(86);////////retrieve state
+             robot.pusher.setPosition(.7);////////retrieve state
          }
          if(gamepad1.triangle){
-             robot.frontDoor.setPosition(0);
+             robot.pusher.setPosition(1);///////pusher
+
+             robot.twister.setPosition(.1);//////////forward
+
          }
          if(gamepad1.circle){
-             robot.frontDoor.setPosition(0);
-             robot.backDoor.setPosition(86);
+             robot.door.setPosition(.86);
+             robot.twister.setPosition(.8);
+
+
          }
 
 /*
@@ -130,9 +141,9 @@ import java.util.concurrent.TimeUnit;
              }
 
              if (door_count % 2 == 0) {
-                 robot.backDoor.setPosition(86);
+                 robot.door.setPosition(86);
              } else {
-                 robot.backDoor.setPosition(0);
+                 robot.door.setPosition(0);
              }
          }
 */
@@ -265,6 +276,23 @@ import java.util.concurrent.TimeUnit;
 /////////////////// DriverControl Functions/////////////////////
 
              }
+     public void setLevel(int slideTarget){
+
+
+         robot.slide.setTargetPosition(slideTarget);
+         //move the slide
+
+         robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         robot.slide.setPower(.5);
+
+         while (robot.slide.isBusy()){
+             telemetry.addData("SLIDE", "running to %7d : %7d",
+                     slideTarget,
+                     robot.slide.getCurrentPosition());
+             //telemetry.addData(slideDataSTR);
+             telemetry.update();
          }
+         robot.slide.setPower(0);
+         }}
 
 

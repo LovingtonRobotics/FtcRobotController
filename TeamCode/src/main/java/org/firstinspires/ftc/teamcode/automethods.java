@@ -376,7 +376,7 @@ public void startturn(double speed, double timeoutS)
             telemetry.addData("SLIDE", "running to %7d : %7d",
                     slideTarget,
                     robot.slide.getCurrentPosition());
-            telemetry.addData(slideDataSTR);
+            //telemetry.addData(slideDataSTR);
             telemetry.update();
         }
 
