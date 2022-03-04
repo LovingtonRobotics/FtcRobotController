@@ -21,6 +21,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -44,6 +45,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
  * the sample regions over the first 3 stones.
  */
 @TeleOp
+@Disabled
 public class testPipeline extends LinearOpMode
 {
     OpenCvWebcam webcam;
