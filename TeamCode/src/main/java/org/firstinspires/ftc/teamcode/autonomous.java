@@ -62,12 +62,18 @@ public class autonomous extends automethods {
 
         if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.LEFT){
             setLevel(1);
+            wait(5);
+            setLevelDown(slideDown);
         }
         else if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.CENTER ) {
             setLevel(2);
+            wait(5);
+            setLevelDown(slideDown);
         }
         else if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.RIGHT){
             setLevel(3);
+            wait(5);
+            setLevelDown(slideDown);
         }
     }
 }

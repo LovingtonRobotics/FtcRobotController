@@ -182,6 +182,8 @@ import java.util.concurrent.TimeUnit;
 
 
 //////////////////////////////////shippingHubServo and claw
+
+
          if (gamepad1.dpad_left) {
              if (!buttonPressed) {
                  bumper_count += 1;
@@ -193,7 +195,6 @@ import java.util.concurrent.TimeUnit;
              if (bumper_count % 2 == 0) {
                  robot.claw.setPosition(.35);
              } else {
-                 robot.claw.setPosition(.67);
                  robot.claw.setPosition(.67);
              }
          }

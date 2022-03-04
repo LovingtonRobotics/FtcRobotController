@@ -459,5 +459,31 @@ public void startturn(double speed, double timeoutS)
 
 
     }
+    public void setLevelDown(int slideTarget){
+        timer.reset();
+        while(timer.time(TimeUnit.MILLISECONDS) < 1000){
+            robot.pusher.setPosition(pusherClose);
+            robot.door.setPosition(doorClose);
+            robot.twister.setPosition(twisterNeutral);
+        }
+
+        robot.slide.setTargetPosition(slideTarget);
+        //move the slide
+
+
+        robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.slide.setPower(-.9);
+
+        while (robot.slide.isBusy()){
+            telemetry.addData("SLIDE", "running to %7d : %7d",
+                    slideTarget,
+                    robot.slide.getCurrentPosition());
+            //telemetry.addData(slideDataSTR);
+            telemetry.update();
+        }
+        robot.slide.setPower(0);
+        robot.door.setPosition(doorOpen);
+
+    }
 
 }

@@ -123,8 +123,8 @@ public class HardwarePushbot {
 
         slide.setDirection(DcMotor.Direction.FORWARD);
 
-        intakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        intakeRight.setDirection(DcMotor.Direction.REVERSE);
+        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        intakeRight.setDirection(DcMotor.Direction.FORWARD);
 
         shippingHub.setDirection(DcMotorSimple.Direction.FORWARD);
 
