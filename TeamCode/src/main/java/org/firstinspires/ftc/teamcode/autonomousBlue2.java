@@ -49,10 +49,12 @@ public class autonomousBlue2 extends automethods {
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
 
-        strafeRight(.5,120,6);
-        imuHold(1);
-        startturn(1,4);
-        strafeRight(.5, -180,8);
+        //webcam
+        strafeRight(.5,60,6);
+        encoderDrive(.5, 40, 5);
+        ///deliver freight
+        encoderDrive(.5, -40, 5);
+        strafeRight(.5, -120, 5);
 
         //  rpos = returnRingPosition(3);
 

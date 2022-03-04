@@ -45,10 +45,16 @@ public class autonomousRed1 extends automethods {
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
 
-        strafeRight(.5,-90,6);
-        imuHold(1);
+        //webcam
+        strafeRight(.5,-60,6);
+        imuHold(0.3);
         startturn(1,4);
-        strafeRight(.5, 180,8);
+        strafeRight(.5, 120,8);
+        encoderDrive(.5, 40, 5);
+        ///deliver freight
+        encoderDrive(.5, -40, 5);
+        strafeRight(.5, 80, 5);
+
 
         //  rpos = returnRingPosition(3);
 
