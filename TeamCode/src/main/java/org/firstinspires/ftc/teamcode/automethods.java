@@ -364,7 +364,7 @@ public void startturn(double speed, double timeoutS)
         slideDataSTR = "MIDDLE";
     }
     else if (level == 3){
-        slideTarget = slideStart-500;
+        slideTarget = slideStart-1509;
         slideDataSTR = "TOP";
     }
 
