@@ -124,11 +124,11 @@ public class testPipeline extends LinearOpMode
         /*
          * The core values which define the location and size of the sample regions
          */
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0,20);
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(60,20);
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(80,20);
-        static final int REGION_WIDTH = 20;
-        static final int REGION_HEIGHT = 20;
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(20,130);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(120,130);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(240,130);
+        static final int REGION_WIDTH = 30;
+        static final int REGION_HEIGHT = 30;
 
         /*
          * Points which actually define the sample region rectangles, derived from above values

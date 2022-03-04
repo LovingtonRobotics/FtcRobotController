@@ -179,7 +179,9 @@ import java.util.concurrent.TimeUnit;
 
                      }
                  }
-//////////////////////////////////shippingHubServo
+
+
+//////////////////////////////////shippingHubServo and claw
          if (gamepad1.dpad_left) {
              if (!buttonPressed) {
                  bumper_count += 1;
@@ -195,6 +197,15 @@ import java.util.concurrent.TimeUnit;
                  robot.claw.setPosition(.67);
              }
          }
+
+         if(gamepad1.dpad_up){
+             robot.shippingHub.setPower(.4);
+         }
+         if(gamepad1.dpad_down){
+             robot.shippingHub.setPower(-.4);
+         }
+
+
                  //////////////////turntable////////////////////
                  if (gamepad1.options && System.currentTimeMillis() - lastPressed > 500) {
                      lastPressed = System.currentTimeMillis();

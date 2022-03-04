@@ -19,13 +19,14 @@ public class autonomous extends automethods {
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
         robot.autoinit(hardwareMap);
-
+        slideDown = robot.slide.getCurrentPosition();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
         pipeline = new testPipeline.BarcodeDeterminationPipeline();
         webcam.setPipeline(pipeline);
         webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
@@ -55,31 +56,18 @@ public class autonomous extends automethods {
         strafeRight(.5,-90,6);
         setLevel(2);*/
 
-        barcodePos = testPipeline.BarcodeDeterminationPipeline.barcodePosition.CENTER;
 
 
 ////////////////////////////////
-//
+
         if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.LEFT){
-            startturn(.1,1);
-
-
+            setLevel(1);
         }
-        if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.CENTER )
-
-        {
-            startturn(.1,1);
-
+        else if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.CENTER ) {
+            setLevel(2);
         }
-        if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.RIGHT){
-
-
-            startturn(.1,1);
-
-
-
-
-
+        else if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.RIGHT){
+            setLevel(3);
         }
     }
 }

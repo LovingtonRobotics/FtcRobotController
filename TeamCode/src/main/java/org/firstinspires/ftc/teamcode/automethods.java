@@ -26,8 +26,19 @@ public class automethods extends LinearOpMode {
 
     ElapsedTime timer = new ElapsedTime();
     String slideDataSTR;
-    int slideStart;
+    int slideDown;
     int slideTarget;
+    double pusherPushing = .09;
+    double pusherClose = .2;
+
+    double doorClose= 0.7;
+    double doorOpen =1;
+
+    double twisterDeliver=0.4;
+    double twisterNeutral=0.815;
+
+
+
     /* Declare OpMode members. */
 ///////////////////////////////////wheel calibration//////////////////////////
     HardwarePushbot robot = new HardwarePushbot();   // Use a Pushbot's hardware
@@ -47,7 +58,6 @@ public class automethods extends LinearOpMode {
     static final double HEADING_THRESHOLD = 1;      // As tight ss we can make it with an integer gyro
     static final double P_TURN_COEFF = .1;     // Larger is more responsive, but also less stable
     // Larger is more responsive, but also less stable
-
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -356,16 +366,83 @@ public void startturn(double speed, double timeoutS)
 
     public void setLevel(double level){
     if (level == 1){
-        slideTarget = slideStart-100;
+        slideTarget = slideDown-1000;
         slideDataSTR = "BOTTOM";
+        robot.slide.setTargetPosition(slideTarget);
+        //move the slide
+        robot.door.setPosition(doorClose);
+        robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.slide.setPower(.9);
+
+        while (robot.slide.isBusy()){
+            telemetry.addData("SLIDE", "running to %7d : %7d",
+                    slideTarget,
+                    robot.slide.getCurrentPosition());
+            //telemetry.addData(slideDataSTR);
+            telemetry.update();
+        }
+        robot.slide.setPower(0);
+        robot.pusher.setPosition(pusherClose);
+        robot.door.setPosition(doorClose);
+        robot.twister.setPosition(twisterDeliver);
+
+        timer.reset();
+        while(timer.time(TimeUnit.MILLISECONDS) < 300){
+            robot.pusher.setPosition(pusherPushing);
+        }
     }
+
     else if (level == 2){
-        slideTarget = slideStart-300;
+        slideTarget = slideDown-1300;
         slideDataSTR = "MIDDLE";
+        robot.slide.setTargetPosition(slideTarget);
+        //move the slide
+        robot.door.setPosition(doorClose);
+        robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.slide.setPower(.9);
+
+        while (robot.slide.isBusy()){
+            telemetry.addData("SLIDE", "running to %7d : %7d",
+                    slideTarget,
+                    robot.slide.getCurrentPosition());
+            //telemetry.addData(slideDataSTR);
+            telemetry.update();
+        }
+        robot.slide.setPower(0);
+        robot.pusher.setPosition(pusherClose);
+        robot.door.setPosition(doorClose);
+        robot.twister.setPosition(twisterDeliver);
+
+        timer.reset();
+        while(timer.time(TimeUnit.MILLISECONDS) < 300){
+            robot.pusher.setPosition(pusherPushing);
+        }
     }
     else if (level == 3){
-        slideTarget = slideStart-1509;
+        slideTarget = slideDown-1509;
         slideDataSTR = "TOP";
+        robot.slide.setTargetPosition(slideTarget);
+        //move the slide
+        robot.door.setPosition(doorClose);
+        robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.slide.setPower(.9);
+
+        while (robot.slide.isBusy()){
+            telemetry.addData("SLIDE", "running to %7d : %7d",
+                    slideTarget,
+                    robot.slide.getCurrentPosition());
+            //telemetry.addData(slideDataSTR);
+            telemetry.update();
+        }
+        robot.slide.setPower(0);
+        robot.pusher.setPosition(pusherClose);
+        robot.door.setPosition(doorClose);
+        robot.twister.setPosition(twisterDeliver);
+
+        timer.reset();
+        while(timer.time(TimeUnit.MILLISECONDS) < 300){
+            robot.pusher.setPosition(pusherPushing);
+        }
     }
 
     robot.slide.setTargetPosition(slideTarget);

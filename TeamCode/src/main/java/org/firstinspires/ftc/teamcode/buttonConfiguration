@@ -4,7 +4,8 @@ left_trigger: slide in, to capture, and then ready to capture
 square: Ready for capture
 triangle: Capture, closes door
 cross: Delivering, opens door
-dpad-down: intakes
+share: intakes
+options:turntables
 dpad_left: open claw
 dpad_left: close claw
 
