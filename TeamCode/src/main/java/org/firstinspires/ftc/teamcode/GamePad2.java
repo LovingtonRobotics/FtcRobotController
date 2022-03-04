@@ -79,6 +79,7 @@ public class GamePad2 extends OpMode {
         }
         if (gamepad2.left_trigger > .5 ) {//down all way
             setLevelDown(slideDown);
+            robot.door.setPosition(doorOpen);
         }
         if(gamepad2.right_bumper){/////////up
             setLevelUp(slideDown - 1509);
@@ -323,7 +324,6 @@ public class GamePad2 extends OpMode {
             telemetry.update();
         }
         robot.slide.setPower(0);
-        robot.door.setPosition(doorOpen);
 
     }}
 
