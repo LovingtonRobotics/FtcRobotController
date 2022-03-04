@@ -30,6 +30,7 @@ public class HardwarePushbot {
 
     public static DcMotor slide = null;
 
+    public static DcMotor shippingHub = null;
 
     public static DcMotor intakeRight = null;
     public static DcMotor intakeLeft = null;
@@ -51,7 +52,6 @@ public class HardwarePushbot {
 
     public static Servo pusher = null;
     public static Servo door = null;
-    public static Servo shippingHubServo = null;
     public static Servo claw = null;
     public static Servo twister = null;
 
@@ -88,6 +88,8 @@ public class HardwarePushbot {
         intakeLeft = hwMap.get(DcMotor.class, "intakeLeft");
         intakeRight = hwMap.get(DcMotor.class, "intakeRight");
 
+        shippingHub = hwMap.get(DcMotor.class, "shippingHub");
+
 
 
 
@@ -100,7 +102,6 @@ public class HardwarePushbot {
 
         door = hwMap.get(Servo.class, "door");
         pusher = hwMap.get(Servo.class, "pusher");
-        shippingHubServo = hwMap.get(Servo.class, "shippingHubServo");
         claw = hwMap.get(Servo.class, "claw");
         twister = hwMap.get(Servo.class, "twister");
 
@@ -122,9 +123,10 @@ public class HardwarePushbot {
 
         slide.setDirection(DcMotor.Direction.FORWARD);
 
-        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
-        intakeRight.setDirection(DcMotor.Direction.FORWARD);
+        intakeLeft.setDirection(DcMotor.Direction.FORWARD);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
+        shippingHub.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set all motors to zero power
         frontLeft.setPower(0);
@@ -136,6 +138,8 @@ public class HardwarePushbot {
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
+
+        shippingHub.setPower(0);
 
 
         // rollers.setPower(0);
@@ -152,6 +156,7 @@ public class HardwarePushbot {
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        shippingHub.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //rollers.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -167,6 +172,7 @@ public class HardwarePushbot {
         intakeLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intakeRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        shippingHub.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 

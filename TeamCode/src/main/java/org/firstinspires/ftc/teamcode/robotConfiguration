@@ -9,14 +9,11 @@ Control Hub
 Motors
 
 0---frontLeft
-1---frontRight
+1---shippingHub
 2---backLeft
 3---intakeLeft
 Servos
 
-0---turntableLeft
-1---claw
-2---shippingHubServo
 
 
 Expansion Hub
@@ -24,15 +21,18 @@ Expansion Hub
 
 Motors
 
-?---slide
+0---slide
 1---backRight
 2---intakeRight
-
+3---frontRight
 Servos
+0---pusher.
 
+1---turntableLeft
+2---claw
 3---turntableRight
-4---backDoor
-5---frontDoor
+4---door
+5---twister
 
 
 

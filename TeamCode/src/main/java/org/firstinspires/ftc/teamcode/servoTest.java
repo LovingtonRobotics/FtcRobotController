@@ -54,18 +54,14 @@ public class servoTest extends OpMode {
 
         ///////////////////////doors//////////////////////////////
         if(gamepad1.square){
-            robot.pusher.setPosition(.09);
-            robot.door.setPosition(.7);
+
             robot.twister.setPosition(0.4);
-            robot.claw.setPosition(0.35);
         }
 
 
         if(gamepad1.circle){
-            robot.pusher.setPosition(.2);
-            robot.door.setPosition(1);
-            robot.twister.setPosition(.8);
-            robot.claw.setPosition(.67);
+
+            robot.twister.setPosition(.815);
         }
 
 
