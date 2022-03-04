@@ -56,6 +56,7 @@ public class autonomousRed1 extends automethods {
         strafeRight(.5, 80, 5);
 
 
+
         //  rpos = returnRingPosition(3);
 
 

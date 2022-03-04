@@ -50,6 +50,7 @@ public class autonomousBlue2 extends automethods {
 
 
         //webcam
+
         strafeRight(.5,60,6);
         encoderDrive(.5, 40, 5);
         ///deliver freight

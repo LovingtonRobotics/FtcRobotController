@@ -54,6 +54,7 @@ public class autonomousBlue1 extends automethods {
 
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
+
         //webcam
         strafeRight(.5,60,6);
         imuHold(0.3);
