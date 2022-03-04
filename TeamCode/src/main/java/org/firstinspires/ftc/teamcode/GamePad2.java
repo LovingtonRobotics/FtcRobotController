@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  @TeleOp(name="Gamepad254", group="Linear Opmode")
  public class GamePad2 extends OpMode {
      HardwarePushbot robot = new HardwarePushbot();
+     ElapsedTime timer = new ElapsedTime();
 
      double robotAngle;
      double rightX;
@@ -22,17 +23,29 @@ import java.util.concurrent.TimeUnit;
      double frontRightPower;
      double backRightPower;
 
+
+     double pusherPushing = .09;
+     double pusherClose = .2;
+
+     double doorClose= 0.7;
+     double doorOpen =1;
+
+     double twisterDeliver=0.4;
+     double twisterNeutral=0.815;
+
+
+
+
      double power;
 
 
-     int slideTarget;
+     int slideDown;
      int slideIntake;
 
      int armTop;
      int bumper_count;
      int door_count;
      int deliver_count;
-
 
 
      int acount;
@@ -47,11 +60,13 @@ import java.util.concurrent.TimeUnit;
      @Override
      public void init() {
          robot.init(hardwareMap);
+         slideDown = robot.slide.getCurrentPosition();
      }
 
 
      @Override
      public void loop() {
+         telemetry.addData("SLIDE","Current Position: %7d",robot.slide.getCurrentPosition());
          telemetry.update();
          /////Drive System//////
          h = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
@@ -81,28 +96,31 @@ import java.util.concurrent.TimeUnit;
 
 //////////////////////////////////arm//////////////////////////////
 
-         if (gamepad1.left_bumper) {//goes
-             robot.slide.setPower(0.5);
+         if (gamepad1.left_bumper && !robot.slideStop.isPressed()) {//goes
+             setLevelUp(slideDown - 1509);
+                                }
 
+         if (gamepad1.left_trigger > .5 && !robot.slideStop.isPressed()) {//goes
+             setLevelDown(slideDown);
 
-         } else if (gamepad1.left_trigger > .5) {// goes down
-             robot.slide.setPower(-0.5);
-
-
-         } else {
-             robot.slide.setPower(0);
          }
-
          ///////////////////////doors//////////////////////////////
-         if(gamepad1.square){
-             robot.frontDoor.setPosition(86);////////retrieve state
+
+
+         if(gamepad1.square){/////////////ready for capture
+             robot.pusher.setPosition(pusherClose);
+             robot.door.setPosition(doorOpen);
+             robot.twister.setPosition(twisterNeutral);
          }
-         if(gamepad1.triangle){
-             robot.frontDoor.setPosition(0);
+         if(gamepad1.triangle){////////////capture
+             robot.pusher.setPosition(pusherClose);
+             robot.door.setPosition(doorClose);
+             robot.twister.setPosition(twisterNeutral);
          }
-         if(gamepad1.circle){
-             robot.frontDoor.setPosition(0);
-             robot.backDoor.setPosition(86);
+         if(gamepad1.cross){///////////////////delivering
+             robot.pusher.setPosition(pusherPushing);
+             robot.door.setPosition(doorOpen);
+             robot.twister.setPosition(twisterDeliver);
          }
 
 /*
@@ -130,9 +148,9 @@ import java.util.concurrent.TimeUnit;
              }
 
              if (door_count % 2 == 0) {
-                 robot.backDoor.setPosition(86);
+                 robot.door.setPosition(86);
              } else {
-                 robot.backDoor.setPosition(0);
+                 robot.door.setPosition(0);
              }
          }
 */
@@ -143,7 +161,7 @@ import java.util.concurrent.TimeUnit;
                  // robot.topIntake.setPower(1);
                  //robot.windmill.setPower(1);
 
-                 if (gamepad1.dpad_down && System.currentTimeMillis() - lastPressed > 500) {
+                 if (gamepad1.share && System.currentTimeMillis() - lastPressed > 500) {
                      lastPressed = System.currentTimeMillis();
                      motorOn = !motorOn;
                      if (robot.intakeLeft.getPower() == 0 && robot.intakeRight.getPower() == 0) {
@@ -161,8 +179,12 @@ import java.util.concurrent.TimeUnit;
 
                      }
                  }
-//////////////////////////////////shippingHubServo
-         if (gamepad1.right_bumper) {
+
+
+//////////////////////////////////shippingHubServo and claw
+
+
+         if (gamepad1.dpad_left) {
              if (!buttonPressed) {
                  bumper_count += 1;
                  buttonPressed = true;
@@ -171,13 +193,22 @@ import java.util.concurrent.TimeUnit;
              }
 
              if (bumper_count % 2 == 0) {
-                 robot.shippingHubServo.setPosition(.86);
+                 robot.claw.setPosition(.35);
              } else {
-                 robot.shippingHubServo.setPosition(0);
+                 robot.claw.setPosition(.67);
              }
          }
+
+         if(gamepad1.dpad_up){
+             robot.shippingHub.setPower(.4);
+         }
+         if(gamepad1.dpad_down){
+             robot.shippingHub.setPower(-.4);
+         }
+
+
                  //////////////////turntable////////////////////
-                 if (gamepad1.cross && System.currentTimeMillis() - lastPressed > 500) {
+                 if (gamepad1.options && System.currentTimeMillis() - lastPressed > 500) {
                      lastPressed = System.currentTimeMillis();
                      motorOn = !motorOn;
                      if (robot.turntableLeft.getPower() == 0 && robot.turntableRight.getPower() == 0 ) {
@@ -192,13 +223,13 @@ import java.util.concurrent.TimeUnit;
                      }
                  }
 //////////////////////////////////////////claw
-         if(gamepad1.dpad_left){////////////close
-             robot.claw.setPosition(0);
-         }
-         if(gamepad1.dpad_right){
-             robot.claw.setPosition(86);
-         }
 
+
+
+
+      /*   if(gamepad1.touchpad){
+             robot.shippingHub.setPower(.3);
+         }*/
 
 
 
@@ -265,6 +296,52 @@ import java.util.concurrent.TimeUnit;
 /////////////////// DriverControl Functions/////////////////////
 
              }
+     public void setLevelUp(int slideTarget){
+
+
+         robot.slide.setTargetPosition(slideTarget);
+         //move the slide
+        robot.door.setPosition(doorClose);
+         robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         robot.slide.setPower(.9);
+
+         while (robot.slide.isBusy()){
+             telemetry.addData("SLIDE", "running to %7d : %7d",
+                     slideTarget,
+                     robot.slide.getCurrentPosition());
+             //telemetry.addData(slideDataSTR);
+             telemetry.update();
          }
+         robot.slide.setPower(0);
+         robot.pusher.setPosition(pusherClose);
+         robot.door.setPosition(doorClose);
+         robot.twister.setPosition(twisterDeliver);
+         }
+     public void setLevelDown(int slideTarget){
+        timer.reset();
+        while(timer.time(TimeUnit.MILLISECONDS) < 1000){
+            robot.pusher.setPosition(pusherClose);
+            robot.door.setPosition(doorClose);
+            robot.twister.setPosition(twisterNeutral);
+        }
+
+         robot.slide.setTargetPosition(slideTarget);
+         //move the slide
+
+
+         robot.slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         robot.slide.setPower(-.9);
+
+         while (robot.slide.isBusy()){
+             telemetry.addData("SLIDE", "running to %7d : %7d",
+                     slideTarget,
+                     robot.slide.getCurrentPosition());
+             //telemetry.addData(slideDataSTR);
+             telemetry.update();
+         }
+         robot.slide.setPower(0);
+         robot.door.setPosition(doorOpen);
+
+     }}
 
 

@@ -12,20 +12,21 @@ import org.openftc.easyopencv.OpenCvWebcam;
 public class autonomous extends automethods {
     HardwarePushbot robot = new HardwarePushbot();// Use a Pushbot's hardware
     OpenCvWebcam webcam;
-    BarcodeDeterminationPipeline pipeline;
-    BarcodeDeterminationPipeline.barcodePosition barcodePos;
+    testPipeline.BarcodeDeterminationPipeline pipeline;
+    testPipeline.BarcodeDeterminationPipeline.barcodePosition barcodePos;
 
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
         robot.autoinit(hardwareMap);
-
+        slideDown = robot.slide.getCurrentPosition();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
+        pipeline = new testPipeline.BarcodeDeterminationPipeline();
         webcam.setPipeline(pipeline);
-
         webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
@@ -41,43 +42,38 @@ public class autonomous extends automethods {
             }
         });
 
-        while(opModeIsActive() && !isStarted()){
+        while(!isStarted( ) && !isStopRequested()){
             telemetry.addData("Analysis",pipeline.getAnalysis());
+            telemetry.update();
 
+            sleep(50);
         }
-        waitForStart();
+
 ////////////////////////////////////ROBOT  START////////////////////////////////////////////////////
 
-
+/*
         encoderDrive(.5, 80, 6);
         strafeRight(.5,-90,6);
-        setLevel(2);
-        barcodePos = BarcodeDeterminationPipeline.barcodePosition.CENTER;
+        setLevel(2);*/
+
 
 
 ////////////////////////////////
-//
-        if(barcodePos == BarcodeDeterminationPipeline.barcodePosition.LEFT){
-            encoderDrive(.55, 2, 5);
 
-
-
+        if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.LEFT){
+            setLevel(1);
+            wait(5);
+            setLevelDown(slideDown);
         }
-        if(barcodePos == BarcodeDeterminationPipeline.barcodePosition.CENTER )
-
-        {
-            encoderDrive(.55, 10, 5);
-
+        else if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.CENTER ) {
+            setLevel(2);
+            wait(5);
+            setLevelDown(slideDown);
         }
-        if(barcodePos == BarcodeDeterminationPipeline.barcodePosition.RIGHT){
-
-
-            encoderDrive(.55, 30, 5);
-
-
-
-
-
+        else if(barcodePos == testPipeline.BarcodeDeterminationPipeline.barcodePosition.RIGHT){
+            setLevel(3);
+            wait(5);
+            setLevelDown(slideDown);
         }
     }
 }

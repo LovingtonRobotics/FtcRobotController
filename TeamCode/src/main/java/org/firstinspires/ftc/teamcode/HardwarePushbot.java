@@ -29,8 +29,8 @@ public class HardwarePushbot {
     public static DcMotor backRight = null;
 
     public static DcMotor slide = null;
-    public static DcMotor pivot = null;
 
+    public static DcMotor shippingHub = null;
 
     public static DcMotor intakeRight = null;
     public static DcMotor intakeLeft = null;
@@ -45,16 +45,15 @@ public class HardwarePushbot {
     /////////////Sensors
     //public static DistanceSensor FrontDistance = null;
     //public static DigitalChannel CascadeTouch = null;  // Hardware Device Object
-    public static TouchSensor armstop = null;
+    public static TouchSensor slideStop = null;
 
     public static CRServo turntableLeft = null;
     public static CRServo turntableRight = null;
 
-    public static Servo frontDoor = null;
-    public static Servo backDoor = null;
-    public static Servo shippingHubServo = null;
+    public static Servo pusher = null;
+    public static Servo door = null;
     public static Servo claw = null;
-
+    public static Servo twister = null;
 
 
 
@@ -85,10 +84,11 @@ public class HardwarePushbot {
         backRight = hwMap.get(DcMotor.class, "backRight");
 
         slide = hwMap.get(DcMotor.class, "slide");
-        pivot = hwMap.get(DcMotor.class, "pivot");
 
         intakeLeft = hwMap.get(DcMotor.class, "intakeLeft");
         intakeRight = hwMap.get(DcMotor.class, "intakeRight");
+
+        shippingHub = hwMap.get(DcMotor.class, "shippingHub");
 
 
 
@@ -100,15 +100,16 @@ public class HardwarePushbot {
         turntableLeft =  hwMap.get(CRServo.class, "turntableLeft");
         turntableRight =  hwMap.get(CRServo.class, "turntableRight");
 
-        backDoor = hwMap.get(Servo.class, "backDoor");
-        frontDoor = hwMap.get(Servo.class, "frontDoor");
-        shippingHubServo = hwMap.get(Servo.class, "shippingHubServo");
+        door = hwMap.get(Servo.class, "door");
+        pusher = hwMap.get(Servo.class, "pusher");
         claw = hwMap.get(Servo.class, "claw");
+        twister = hwMap.get(Servo.class, "twister");
 
 
         //Define and Initialize Sensors///////////////////
 
-        armstop = hwMap.get(TouchSensor.class,"armstop");
+        slideStop = hwMap.get(TouchSensor.class,"slideStop");
+
 
 
 
@@ -121,11 +122,11 @@ public class HardwarePushbot {
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
         slide.setDirection(DcMotor.Direction.FORWARD);
-        pivot.setDirection(DcMotorSimple.Direction.FORWARD);
 
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         intakeRight.setDirection(DcMotor.Direction.FORWARD);
 
+        shippingHub.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set all motors to zero power
         frontLeft.setPower(0);
@@ -134,10 +135,11 @@ public class HardwarePushbot {
         backRight.setPower(0);
 
         slide.setPower(0);
-        pivot.setPower(0);
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
+
+        shippingHub.setPower(0);
 
 
         // rollers.setPower(0);
@@ -150,11 +152,11 @@ public class HardwarePushbot {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        shippingHub.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //rollers.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -165,12 +167,12 @@ public class HardwarePushbot {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        pivot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         intakeLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intakeRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        shippingHub.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 
