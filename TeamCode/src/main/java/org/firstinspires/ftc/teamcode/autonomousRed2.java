@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="autonomous", group="Test")
+@Autonomous(name="autonomousRed2", group="Test")
 public class autonomousRed2 extends automethods {
     HardwarePushbot robot = new HardwarePushbot();// Use a Pushbot's hardware
 
